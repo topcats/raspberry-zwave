@@ -14,7 +14,6 @@ class ZWaveAPI {
         $ch_login = curl_init();
 
         curl_setopt($ch_login, CURLOPT_URL, self::apibaseURL."login");
-        #curl_setopt($ch_login, CURLOPT_CUSTOMREQUEST, "POST");  
         curl_setopt($ch_login, CURLOPT_POST, 1);
         curl_setopt($ch_login, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
         curl_setopt($ch_login, CURLOPT_POSTFIELDS, $post_login);
@@ -122,6 +121,12 @@ class ZWaveAPI {
         if ($this->login_cookie == '')
             $this->login_cookie = $this->zway_dologin();
 
+        #Check inputs
+        if ($deviceid == '')
+            return false;
+        if ($newcommand == '')
+            return false;
+
         #Do Command
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, self::apibaseURL."devices/".$deviceid.'/command/'.$newcommand);
@@ -147,6 +152,13 @@ class ZWaveAPI {
         #Double check login
         if ($this->login_cookie == '')
             $this->login_cookie = $this->zway_dologin();
+
+        #Check inputs
+        if ($instanceid == '')
+            return false;
+        #Time must be HH:mm
+        if (strlen($newparamtime) != 5)
+            return false;
 
         #Do Command
         $ch = curl_init();
