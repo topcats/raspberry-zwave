@@ -168,6 +168,7 @@ class ZWaveAPI {
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
         curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json","Accept: application/json","Cookie: ZWAYSession=".$this->login_cookie));
         curl_setopt($ch, CURLOPT_POSTFIELDS, '{"active":'.$newcactive.',"params":{"time":"'.$newparamtime.'","weekdays":['.$newparamdays.']}}');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, '{"active":'.$newcactive.',"params":{"times":["'.$newparamtime.'"],"weekdays":['.$newparamdays.']}}');
         $ch_response = curl_exec($ch);
         curl_close($ch);
 
